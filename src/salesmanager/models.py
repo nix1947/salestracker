@@ -1,4 +1,5 @@
 from django.db import models
+from core.models import TimeStampedModel
 from core.constants import CATEGORY
 
 
@@ -40,7 +41,9 @@ class Company(models.Model):
     def __str__(self):
         return self.name
 
-class Item(models.Model):
+class Item(TimeStampedModel):
+    """Item model """
+
     name = models.CharField("Item name", max_length=255)
     tag = models.CharField("Item tag", max_length=30, unique=True)
     category = models.ForeignKey(Category)

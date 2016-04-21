@@ -6,17 +6,21 @@
     <title>Sales tracker dashboard </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    {% include '_css.html' %}
+    {% include 'salesmanager/_css.html' %}
 
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
+      {% block header %}
       <!-- header page -->
-      {% include '_header.html' %}
+        {% include 'salesmanager/_header.html' %}
       <!-- end _header.html -->
+      {% endblock header %}
 
+      {% block sidebar %}
       <!-- sidebar menubar -->
-        {% include '_sidebarmenu.html' %}
+        {% include 'salesmanager/_sidebarmenu.html' %}
+      {% endblock sidebar %}
       <!-- end sidebar menubar -->
 
       <!-- Content Wrapper. Contains page content -->
@@ -41,10 +45,9 @@
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
-      <footer class="main-footer">
-
-        <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights reserved.
-      </footer>
+      {% block footer %}
+        {% include 'salesmanager/_footer.html' %}
+      {% endblock footer %}
 
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
@@ -212,6 +215,6 @@
            immediately after the control sidebar -->
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
-    {% include '_js.html' %}
+    {% include 'salesmanager/_js.html' %}
   </body>
 </html>

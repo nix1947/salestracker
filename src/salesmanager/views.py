@@ -1,5 +1,4 @@
 from django.shortcuts import render
 
-
 def dashboard(request):
-    return render(request, 'salesmanager/base.html', {})
+     return render(request, 'salesmanager/base.html', {})
