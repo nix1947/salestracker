@@ -1,0 +1,13 @@
+{% extends 'salesmanager/base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<form   method="post">{% csrf_token %}
+{{form}}
+<br>
+  <button type="submit" class="btn btn-info pull-left ">Update Item</button>
+</form>
+
+{% endblock content %}

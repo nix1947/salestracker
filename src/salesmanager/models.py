@@ -51,14 +51,17 @@ class Item(TimeStampedModel):
     category = models.ForeignKey(Category)
     company = models.ForeignKey(Company)
     price = models.DecimalField(max_digits=15, decimal_places=2)
-    status = models.BooleanField("New or Sold", default=True)
+    status = models.CharField(max_length=4, choices=(
+        ('new', 'New'),
+        ('sold', 'Sold'),
+    ), default='new')
 
 
     def __str__(self):
         return self.tag + "-" + self.name
 
     def get_status(self):
-        if self.status is True:
+        if self.status == 'new':
             return "New"
         else:
             return "Sold"

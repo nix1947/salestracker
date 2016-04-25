@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
+from django.core.urlresolvers import reverse_lazy
+
+
 
 from .models import Item
 from .forms import ItemForm
@@ -21,14 +24,29 @@ class ItemListView(ListView):
 class ItemCreateView(CreateView):
     """Create view for item model"""
     model = Item
+    form_class = ItemForm
     template_name = 'salesmanager/item_create_form.html'
-    fields = ('name','tag', 'category', 'company', 'price',)
-    success_url = '/'
+    # fields = ('name','tag', 'category', 'company', 'price',)
+    success_url = reverse_lazy("items:items")
 
 class ItemDetailView(DetailView):
     model = Item
     context_object_name = 'item'
     template_name = 'salesmanager/item_detail.html'
+
+
+class ItemUpdateView(UpdateView):
+    model = Item
+    form_class = ItemForm
+    template_name = 'salesmanager/item_form.html'
+
+class ItemDeleteView(DeleteView):
+    model = Item
+    success_url = reverse_lazy('items:items')
+
+
+    # don't need to define fields when define form_class
+    # fields = ('name','tag', 'category', 'company', 'price',)
 #
 # def create_item(request):
 #     """function to create item"""

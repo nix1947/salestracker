@@ -16,7 +16,9 @@
           <th>Category</th>
           <th>Company</th>
           <th>status</th>
+          <th>Update</th>
           <th>Delete</th>
+
         </tr>
       </thead>
       <tbody>
@@ -28,6 +30,8 @@
           <td>{{item.category.category_name}}</td>
           <td>{{item.company.name}}</td>
           <td>{{item.get_status}}</td>
+          <td><a href="{% url 'items:update_item' pk=item.pk%}">Update</a></td>
+          <td><a href="{% url 'items:delete_item' pk=item.pk%}">Delete</a></td>
         </tr>
       {% endfor %}
       </tbody>

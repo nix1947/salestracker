@@ -1,0 +1,5 @@
+.errorlist > li{
+  list-style: none;
+  color: #dd4b39;
+  text-align: center;
+}

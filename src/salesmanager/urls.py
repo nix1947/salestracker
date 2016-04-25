@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from .models import Item
-from .views import ItemListView, ItemDetailView
+from .views import ItemListView, ItemDetailView, ItemDeleteView
 
 from . import views
 
@@ -16,4 +16,8 @@ urlpatterns = [
     url(r'item/(?P<pk>\d+)/$',ItemDetailView.as_view(),name="item"),
     #url to edit the items
     url(r'create/$', views.ItemCreateView.as_view(), name="create_item"),
+    #update an item
+    url(r'update/(?P<pk>\d+)/$', views.ItemUpdateView.as_view(), name="update_item"),
+    #delete an item
+    url(r'delete/(?P<pk>\d+)/$', views.ItemDeleteView.as_view(), name="delete_item"),
 ]
