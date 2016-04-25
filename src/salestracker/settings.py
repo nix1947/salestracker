@@ -37,6 +37,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third party apps
+    'crispy_forms',
+    #inproject apps
+    'core', #app that shared common constants, templatetags and model
     'salesmanager',
 )
 

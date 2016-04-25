@@ -1,6 +1,8 @@
 from django.db import models
+from django.core.urlresolvers import reverse
 from core.models import TimeStampedModel
 from core.constants import CATEGORY
+
 
 
 class Address(models.Model):
@@ -49,6 +51,18 @@ class Item(TimeStampedModel):
     category = models.ForeignKey(Category)
     company = models.ForeignKey(Company)
     price = models.DecimalField(max_digits=15, decimal_places=2)
+    status = models.BooleanField("New or Sold", default=True)
+
 
     def __str__(self):
         return self.tag + "-" + self.name
+
+    def get_status(self):
+        if self.status is True:
+            return "New"
+        else:
+            return "Sold"
+
+
+    def get_absolute_url(self):
+        return reverse('items:item', kwargs={'pk':self.pk})

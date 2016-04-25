@@ -27,21 +27,24 @@
     <ul class="sidebar-menu">
       <li class="header">MAIN NAVIGATION</li>
       <li class="active treeview">
-        <a href="{% url "salesmanager:dashboard" %}">
+        <a href="{% url 'dashboard' %}">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
       <li class="treeview">
         <a href="#">
-          <i class="fa fa-files-o"></i>
-          <span>Layout Options</span>
-          <span class="label label-primary pull-right">4</span>
+          <i class="fa fa-cart-plus"></i>
+          <span>Items <i class="fa  fa-angle-double-down"></i></span>
+          <!-- <span class="label label-primary pull-right">4</span> -->
         </a>
         <ul class="treeview-menu">
-          <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-          <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-          <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-          <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+
+          <li><a href="{% url 'items:create_item' %}"><i class="fa fa-plus-square"></i>Create Item</a></li>
+          <li><a href="{% url 'items:create_item' %}"><i class="fa fa-list"></i> List Sold Item</a></li>
+          <li><a href="{% url 'items:items' %}"><i class="fa fa-list"></i>List New Item</a></li>
+          <li><a href="{% url 'items:items' %}"><i class="fa fa-list"></i>List All Item</a></li>
+          <!-- <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li> -->
+          <!-- <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li> -->
         </ul>
       </li>
       <li>
