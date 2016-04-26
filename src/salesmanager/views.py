@@ -7,9 +7,12 @@ from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 
 
-
 from .models import Item
 from .forms import ItemForm
+
+#company class import
+from .models import Company
+from .forms import CompanyForm
 
 
 
@@ -44,6 +47,35 @@ class ItemDeleteView(DeleteView):
     model = Item
     success_url = reverse_lazy('items:items')
 
+
+#Company models related views##
+
+class CompanyCreateView(CreateView):
+    """Creating company model"""
+    model = Company
+    template_name = 'salesmanager/company_create_form.html'
+    form_class = CompanyForm
+    success_url = reverse_lazy("companies:companies")
+
+
+
+class CompanyListView(ListView):
+    model = Company
+    template_name = 'salesmanager/company_list.html'
+    context_object_name = 'companies'
+
+
+class CompanyUpdateView(UpdateView):
+    model = Company
+    template_name = 'salesmanager/company_form.html'
+    context_object_name = 'company'
+    form_class = CompanyForm
+
+
+class CompanyDeleteView(DeleteView):
+    model = Company
+    template_name = 'salesmanager/company_confirm_delete.html'
+    success_url = reverse_lazy("companies:companies")
 
     # don't need to define fields when define form_class
     # fields = ('name','tag', 'category', 'company', 'price',)

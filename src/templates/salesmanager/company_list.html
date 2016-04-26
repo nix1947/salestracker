@@ -1,0 +1,71 @@
+{% extends 'salesmanager/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">List of Companies</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    {% if companies %}
+    <table id="items1" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Company Name</th>
+          <th>Phone</th>
+          <th>Mobile</th>
+          <th>address</th>
+          <th>Contact Person</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for company in companies %}
+        <tr>
+          <td><a href="{{item.get_absolute_url}}">{{company.name}}</a></td>
+          <td>{{company.phone}}</td>
+          <td>{{company.mobile}}</td>
+          <td>{{company.address.zone}}</td>
+          <td>{{company.contact_person.first_name}} {{company.contact_person.last_name}}</td>
+          <td><a href="{% url 'companies:update' pk=company.pk%}">Update</a></td>
+          <td><a href="{% url 'companies:delete' pk=company.pk%}"">Delete</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Item Name</th>
+          <th>Item Tag</th>
+          <th>Price</th>
+          <th>Category</th>
+          <th>Company</th>
+          <th>status</th>
+          <th>Delete</th>
+        </tr>
+      </tfoot>
+    </table>
+      {% else %}
+      <h2>No items found </h2>
+    {% endif %}
+
+
+  </div><!-- /.box-body -->
+{% endblock content %}
+    <!-- DataTables -->
+    <script src="{% static 'plugins/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/datatables/dataTables.bootstrap.min.js' %}"></script>
+
+    <!-- page script -->
+    <script>
+      $(function () {
+        $("#items1").DataTable();
+        $('#items2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false
+        });
+      });
+    </script>

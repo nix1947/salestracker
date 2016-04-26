@@ -9,6 +9,9 @@ urlpatterns = [
 
     #url for product items
     url(r'items/', include('salesmanager.urls', namespace="items")),
+    #for company
+    url(r'^companies/', include('salesmanager.company_urls',namespace="companies")),
+    #for dashboard
     url(r'dashboard/$',dashboard, name="dashboard"),
 
     url(r'^admin/', include(admin.site.urls)),
