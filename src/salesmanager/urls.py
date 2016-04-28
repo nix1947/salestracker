@@ -20,4 +20,8 @@ urlpatterns = [
     url(r'update/(?P<pk>\d+)/$', views.ItemUpdateView.as_view(), name="update_item"),
     #delete an item
     url(r'delete/(?P<pk>\d+)/$', views.ItemDeleteView.as_view(), name="delete_item"),
+    #url to list the all sold items
+    url(r'sold/$', views.list_sold_item, name="sold_items"),
+    #url to list the all new items
+    url(r'new/$', views.list_new_item, name="new_items")
 ]

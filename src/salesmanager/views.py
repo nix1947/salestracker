@@ -1,6 +1,8 @@
+import string, random
+
 from django.shortcuts import render
 from django.utils import timezone
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -32,6 +34,16 @@ class ItemCreateView(CreateView):
     # fields = ('name','tag', 'category', 'company', 'price',)
     success_url = reverse_lazy("items:items")
 
+    def get_initial(self):
+        """Pre populate the data field"""
+
+        size = 6 #generate random tag of length 6
+        chars=string.ascii_uppercase + string.digits
+        random_tag =  ''.join(random.choice(chars) for _ in range(size))
+        initial = super(ItemCreateView, self).get_initial()
+        initial["tag"] = random_tag
+        return initial
+
 class ItemDetailView(DetailView):
     model = Item
     context_object_name = 'item'
@@ -46,6 +58,14 @@ class ItemUpdateView(UpdateView):
 class ItemDeleteView(DeleteView):
     model = Item
     success_url = reverse_lazy('items:items')
+
+def list_sold_item(request):
+    items = Item.objects.filter(status='sold')
+    return render(request, 'salesmanager/item_list.html', {'items':items})
+
+def list_new_item(request):
+    items = Item.objects.filter(status='new')
+    return render(request, 'salesmanager/item_list.html', {'items':items})
 
 
 #Company models related views##

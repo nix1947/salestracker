@@ -9,9 +9,11 @@ class ItemForm(ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Item Name"}),
             'tag':forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Item Tag"}),
+
             'category':forms.Select(attrs={'class': 'form-control', 'placeholder':"Item Category"}),
             'company':forms.Select(attrs={'class': 'form-control'}),
             'price':forms.NumberInput(attrs={'class': 'form-control'}),
+            'selling_price':forms.NumberInput(attrs={'class': 'form-control'}),
             'status':forms.Select(attrs={'class': 'form-control'}),
         }
 

@@ -12,7 +12,7 @@
         <tr>
           <th>Item Name</th>
           <th>Item Tag</th>
-          <th>Price</th>
+          <th> Selling Price</th>
           <th>Category</th>
           <th>Company</th>
           <th>status</th>
@@ -26,7 +26,7 @@
         <tr>
           <td><a href="{{item.get_absolute_url}}">{{item.name}}</a></td>
           <td>{{item.tag}}</td>
-          <td>Rs. {{item.price}}</td>
+          <td>Rs. {{item.selling_price}}</td>
           <td>{{item.category.category_name}}</td>
           <td>{{item.company.name}}</td>
           <td>{{item.get_status}}</td>

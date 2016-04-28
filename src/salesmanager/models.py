@@ -1,3 +1,5 @@
+import string, random
+
 from django.db import models
 from django.core.urlresolvers import reverse
 from core.models import TimeStampedModel
@@ -50,21 +52,26 @@ class Item(TimeStampedModel):
     tag = models.CharField("Item tag", max_length=30, unique=True)
     category = models.ForeignKey(Category)
     company = models.ForeignKey(Company)
-    price = models.DecimalField(max_digits=15, decimal_places=2)
+    price = models.DecimalField('Purchase price', max_digits=15, decimal_places=2)
+    selling_price = models.DecimalField(max_digits=15, decimal_places=2)
     status = models.CharField(max_length=4, choices=(
         ('new', 'New'),
         ('sold', 'Sold'),
     ), default='new')
 
 
+
+
     def __str__(self):
         return self.tag + "-" + self.name
 
     def get_status(self):
-        if self.status == 'new':
+        if 'new' in self.status:
             return "New"
+        if self.status == 'sold':
+            return 'Sold'
         else:
-            return "Sold"
+            return "Unkown"
 
 
     def get_absolute_url(self):
