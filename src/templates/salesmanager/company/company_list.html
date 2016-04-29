@@ -22,13 +22,13 @@
       <tbody>
       {% for company in companies %}
         <tr>
-          <td><a href="{{item.get_absolute_url}}">{{company.name}}</a></td>
+          <td>{{company.name}}</td>
           <td>{{company.phone}}</td>
           <td>{{company.mobile}}</td>
           <td>{{company.address.zone}}</td>
           <td>{{company.contact_person.first_name}} {{company.contact_person.last_name}}</td>
           <td><a href="{% url 'companies:update' pk=company.pk%}">Update</a></td>
-          <td><a href="{% url 'companies:delete' pk=company.pk%}"">Delete</a></td>
+          <td><a href="{% url 'companies:delete' pk=company.pk%}">Delete</a></td>
         </tr>
       {% endfor %}
       </tbody>
@@ -44,6 +44,7 @@
         </tr>
       </tfoot>
     </table>
+    {% include 'salesmanager/pagination.html' with page=page_obj %}
       {% else %}
       <h2>No items found </h2>
     {% endif %}

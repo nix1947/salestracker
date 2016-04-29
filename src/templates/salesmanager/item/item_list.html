@@ -46,7 +46,9 @@
           <th>Delete</th>
         </tr>
       </tfoot>
+
     </table>
+      {% include 'salesmanager/pagination.html' with page=page_obj %}
       {% else %}
       <h2>No items found </h2>
     {% endif %}
