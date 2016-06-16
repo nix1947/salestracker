@@ -1,0 +1,38 @@
+{% extends 'salesmanager/base.html' %}
+{% block content %}
+  <!-- company detail page -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-1">
+          <h3 class="info" sytle="color:#333;">{{company.name}}</h3>
+          <pclass="info" sytle="color:#333;">Company Phone: {{company.mobile}}</p>
+          <p class="info" sytle="color:#333;">Total Debit: Rs: {{company.total_amount}}</p>
+      </div>
+      <div class="col-md-4">
+        <form  method="post">
+          <h2>Pay here</h2>
+          <input class="form-control"type="number" name="name" maxlength="15"><br>
+          <input class="form-control info" type="submit" name="name" value="Pay">
+        </form>
+      </div><!-- end col-md-4 -->
+    </div><!-- end row -->
+
+    <div class="row">
+      <h2> Company Sales Details </h2>
+      <div class="col-md-8 col-md-offset-2">
+        <h3>Last 7 Days sales: Rs: {{company.weekly_sales}} </h3>
+        <h3>Last 30 days sales: Rs: {{company.monthly_sales}} </h3>
+      </div>
+    </div> <!-- end row -->
+
+    <div class="row">
+      <h2> Company sales Benefit </h2>
+      <div class="col-md-8 col-md-offset-2">
+        <h3>Last 7 Days Benefit: Rs: {{company.weekly_benefit}} </h3>
+        <h3>Last 30 days Benefit: Rs: {{company.monthly_benefit}} </h3>
+      </div>
+    </div>
+    <hr>
+  </div><!-- end container -->
+{% endblock content %}

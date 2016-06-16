@@ -23,14 +23,14 @@ from .forms import CompanyForm
 class ItemListView(ListView):
     """List all the items"""
     model = Item
-    template_name = 'salesmanager/item_list.html'
+    template_name = 'salesmanager/item/item_list.html'
     context_object_name = 'items'
 
 class ItemCreateView(CreateView):
     """Create view for item model"""
     model = Item
     form_class = ItemForm
-    template_name = 'salesmanager/item_create_form.html'
+    template_name = 'salesmanager/item/item_create_form.html'
     # fields = ('name','tag', 'category', 'company', 'price',)
     success_url = reverse_lazy("items:items")
 
@@ -47,13 +47,13 @@ class ItemCreateView(CreateView):
 class ItemDetailView(DetailView):
     model = Item
     context_object_name = 'item'
-    template_name = 'salesmanager/item_detail.html'
+    template_name = 'salesmanager/item/item_detail.html'
 
 
 class ItemUpdateView(UpdateView):
     model = Item
     form_class = ItemForm
-    template_name = 'salesmanager/item_form.html'
+    template_name = 'salesmanager/item/item_form.html'
 
 class ItemDeleteView(DeleteView):
     model = Item
@@ -61,11 +61,11 @@ class ItemDeleteView(DeleteView):
 
 def list_sold_item(request):
     items = Item.objects.filter(status='sold')
-    return render(request, 'salesmanager/item_list.html', {'items':items})
+    return render(request, 'salesmanager/item/item_list.html', {'items':items})
 
 def list_new_item(request):
     items = Item.objects.filter(status='new')
-    return render(request, 'salesmanager/item_list.html', {'items':items})
+    return render(request, 'salesmanager/item/item_list.html', {'items':items})
 
 
 #Company models related views##
@@ -73,7 +73,7 @@ def list_new_item(request):
 class CompanyCreateView(CreateView):
     """Creating company model"""
     model = Company
-    template_name = 'salesmanager/company_create_form.html'
+    template_name = 'salesmanager/company/company_create_form.html'
     form_class = CompanyForm
     success_url = reverse_lazy("companies:companies")
 
@@ -81,20 +81,24 @@ class CompanyCreateView(CreateView):
 
 class CompanyListView(ListView):
     model = Company
-    template_name = 'salesmanager/company_list.html'
+    template_name = 'salesmanager/company/company_list.html'
     context_object_name = 'companies'
 
 
 class CompanyUpdateView(UpdateView):
     model = Company
-    template_name = 'salesmanager/company_form.html'
+    template_name = 'salesmanager/company/company_form.html'
     context_object_name = 'company'
     form_class = CompanyForm
 
+class CompanyDetailView(DetailView):
+    model = Company
+    template_name = 'salesmanager/company/company_detail.html'
+    context_object_name = 'company'
 
 class CompanyDeleteView(DeleteView):
     model = Company
-    template_name = 'salesmanager/company_confirm_delete.html'
+    template_name = 'salesmanager/company/company_confirm_delete.html'
     success_url = reverse_lazy("companies:companies")
 
     # don't need to define fields when define form_class

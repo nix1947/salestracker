@@ -1,5 +1,6 @@
 import string, random
-
+from datetime import timedelta
+from django.utils import timezone
 from django.db import models
 from django.core.urlresolvers import reverse
 from core.models import TimeStampedModel
@@ -33,7 +34,12 @@ class ContactPerson(models.Model):
     def __str__(self):
         return self.first_name + " " + self.last_name
 
+class PaymentStatus(models.Model):
+    date = models.DateTimeField();
+    paid_value = models.DecimalField(max_digits=8, decimal_places=2)
 
+    def __str__(self):
+        return self.paid_value
 
 class Company(models.Model):
     name = models.CharField(max_length=255)
@@ -44,6 +50,62 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('companies:company', kwargs={'pk':self.pk})
+
+    def total_amount(self):
+        total_amount = 0
+        #grab all the item
+        items = self.item_set.all()
+        for item in items:
+            total_amount += item.price
+        return total_amount
+
+    def weekly_sales(self):
+        """Calculate weekly sales or last 7 days sales, based on the selling price of an item
+        """
+        last_seven_day = timezone.now() - timedelta(days=7)
+        items = self.item_set.filter(status="sold", updated_at__gte=last_seven_day)
+        total_sales = 0
+        for item in items:
+            total_sales += item.price
+        return total_sales
+
+    def monthly_sales(self):
+        """Calcualte last 30 days sales based on the selling price assume each month equal to 30 days
+        """
+        last_thirty_days = timezone.now() - timedelta(days=30)
+        items = self.item_set.filter(status="sold", updated_at__gte=last_thirty_days)
+        total_sales = 0
+        for item in items:
+            total_sales += item.price
+        return total_sales
+
+    def weekly_benefit(self):
+        """Calculate weekly benefit of this company from this day"""
+        total_purchase_price = 0
+        total_selling_price = 0
+        last_seven_day = timezone.now() - timedelta(days=7)
+        items = self.item_set.filter(status="sold", updated_at__gte=last_seven_day)
+        for item in items:
+            total_purchase_price += item.price
+            total_selling_price += item.selling_price
+        benefit = total_selling_price - total_purchase_price
+        return benefit
+
+    def monthly_benefit(self):
+        """Calculate monthly benefit from this company from this day """
+        """Calculate weekly benefit of this company from this day"""
+        total_purchase_price = 0
+        total_selling_price = 0
+        last_thirty_days = timezone.now() - timedelta(days=30)
+        items = self.item_set.filter(status="sold", updated_at__gte=last_thirty_days)
+        for item in items:
+            total_purchase_price += item.price
+            total_selling_price += item.selling_price
+        benefit = total_selling_price - total_purchase_price
+        return benefit
 
 class Item(TimeStampedModel):
     """Item model """

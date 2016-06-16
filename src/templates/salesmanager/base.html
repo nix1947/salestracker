@@ -7,7 +7,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {% block css %}
-      {% include 'salesmanager/_css.html' %}
+      {% include 'salesmanager/partial/_css.html' %}
     {% endblock css %}
 
   </head>
@@ -15,29 +15,19 @@
     <div class="wrapper">
       {% block header %}
       <!-- header page -->
-        {% include 'salesmanager/_header.html' %}
+        {% include 'salesmanager/partial/_header.html' %}
       <!-- end _header.html -->
       {% endblock header %}
 
       {% block sidebar %}
       <!-- sidebar menubar -->
-        {% include 'salesmanager/_sidebarmenu.html' %}
+        {% include 'salesmanager/partial/_sidebarmenu.html' %}
       {% endblock sidebar %}
       <!-- end sidebar menubar -->
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            Dashboard
-            <small>Control panel</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
-          </ol>
-        </section>
+      
 
         <!-- Main content -->
         <section class="content">
@@ -48,7 +38,7 @@
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
       {% block footer %}
-        {% include 'salesmanager/_footer.html' %}
+        {% include 'salesmanager/partial/_footer.html' %}
       {% endblock footer %}
 
       <!-- Control Sidebar -->
@@ -218,7 +208,7 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
     {% block js %}
-      {% include 'salesmanager/_js.html' %}
+      {% include 'salesmanager/partial/_js.html' %}
     {% endblock js %}
   </body>
 </html>
