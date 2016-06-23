@@ -6,14 +6,11 @@ from django.core.urlresolvers import reverse
 from core.models import TimeStampedModel
 from core.constants import CATEGORY
 
-
-
 class Address(models.Model):
     zone = models.CharField(max_length=50)
 
     def __str__(self):
         return self.zone
-
 
 class Category(models.Model):
     """Item categories"""
@@ -34,19 +31,25 @@ class ContactPerson(models.Model):
     def __str__(self):
         return self.first_name + " " + self.last_name
 
-class PaymentStatus(models.Model):
-    date = models.DateTimeField();
+class Clearance(TimeStampedModel):
+    """models to hold the clerance due, consist of created and updated value
+    """
+
     paid_value = models.DecimalField(max_digits=8, decimal_places=2)
+    company = models.ForeignKey('Company') #a clerance is related to company
+    description = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.paid_value
+        return str(self.paid_value)
 
-class Company(models.Model):
+class Company(TimeStampedModel):
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length=9)
     mobile = models.CharField(max_length=10)
     address = models.ForeignKey(Address)
+    email = models.EmailField(blank=False)
     contact_person = models.ForeignKey(ContactPerson)
+
 
     def __str__(self):
         return self.name
@@ -54,13 +57,44 @@ class Company(models.Model):
     def get_absolute_url(self):
         return reverse('companies:company', kwargs={'pk':self.pk})
 
-    def total_amount(self):
+    def total_purchase(self):
+        """Calculate the total purchase from self.company"""
+
         total_amount = 0
         #grab all the item
         items = self.item_set.all()
         for item in items:
             total_amount += item.price
         return total_amount
+
+    def total_sales(self):
+        """Calculate the total sales of an item based on purchase price
+        """
+        total_sales = 0
+        items = self.item_set.filter(status="sold")
+        for item in items:
+            total_sales += item.price
+        return total_sales
+
+    def total_clearance(self):
+        """Calculate the total amount paid from the begining of a company
+        """
+        total_clearances = 0
+        debit = 0 #variable to track the remaining debit
+        clearances = self.clearance_set.all() #grab all the previous clerances
+        for clearance in clearances:
+            total_clearances += clearance.paid_value
+        return total_clearances
+
+    def debit(self):
+        """Calculate the remaining debit by subtracting from the total_purchase
+        to payment
+        """
+        debit = 0 #variable to track the remaining debit
+        debit = self.total_purchase() - self.total_clearance()
+        return debit
+
+
 
     def weekly_sales(self):
         """Calculate weekly sales or last 7 days sales, based on the selling price of an item
@@ -81,6 +115,19 @@ class Company(models.Model):
         for item in items:
             total_sales += item.price
         return total_sales
+
+
+    def yearly_sales(self):
+        """Calculate total yearly sales for this instance from today date
+        """
+
+        last_365_days = timezone.now() - timedelta(days=365)
+        items = self.item_set.filter(status="sold", updated_at__gte=last_365_days)
+        total_sales = 0
+        if item in items:
+            total_sales += item.price
+        return total_sales
+
 
     def weekly_benefit(self):
         """Calculate weekly benefit of this company from this day"""
@@ -107,6 +154,7 @@ class Company(models.Model):
         benefit = total_selling_price - total_purchase_price
         return benefit
 
+
 class Item(TimeStampedModel):
     """Item model """
 
@@ -114,14 +162,12 @@ class Item(TimeStampedModel):
     tag = models.CharField("Item tag", max_length=30, unique=True)
     category = models.ForeignKey(Category)
     company = models.ForeignKey(Company)
-    price = models.DecimalField('Purchase price', max_digits=15, decimal_places=2)
-    selling_price = models.DecimalField(max_digits=15, decimal_places=2)
+    price = models.DecimalField('Purchase price', max_digits=6, decimal_places=2)
+    selling_price = models.DecimalField(max_digits=6, decimal_places=2)
     status = models.CharField(max_length=4, choices=(
         ('new', 'New'),
         ('sold', 'Sold'),
     ), default='new')
-
-
 
 
     def __str__(self):

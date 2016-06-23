@@ -1,5 +1,7 @@
+#python related library import
 import string, random
 
+#core django libraries import
 from django.shortcuts import render
 from django.utils import timezone
 from django.http import HttpResponseRedirect, HttpResponse
@@ -8,7 +10,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.core.urlresolvers import reverse_lazy
 
-
+#item class import
 from .models import Item
 from .forms import ItemForm
 
@@ -16,7 +18,7 @@ from .forms import ItemForm
 from .models import Company
 from .forms import CompanyForm
 
-
+from . import overallcost
 
 #item list view is implemented in salesmanager.urls.py file
 
@@ -58,6 +60,7 @@ class ItemUpdateView(UpdateView):
 class ItemDeleteView(DeleteView):
     model = Item
     success_url = reverse_lazy('items:items')
+    template_name = 'salesmanager/item/item_confirm_delete.html'
 
 def list_sold_item(request):
     items = Item.objects.filter(status='sold')
@@ -101,6 +104,17 @@ class CompanyDeleteView(DeleteView):
     template_name = 'salesmanager/company/company_confirm_delete.html'
     success_url = reverse_lazy("companies:companies")
 
+def dashboard(request):
+    """Main Dashboard page"""
+
+    dashboard_object = {}
+    dashboard_object['overall_cost'] = overallcost.get_overall_cost()
+    dashboard_object['overall_sales'] = overallcost.get_overall_sales()
+    overall_benefit, benefit_perctange = overallcost.get_overall_benefit()
+    dashboard_object['overall_benefit'] = overall_benefit
+    dashboard_object['overall_benefit_in_perctange'] = benefit_perctange
+    return render(request, 'salesmanager/dashboard.html', dashboard_object)
+
     # don't need to define fields when define form_class
     # fields = ('name','tag', 'category', 'company', 'price',)
 #
@@ -122,10 +136,3 @@ class CompanyDeleteView(DeleteView):
 #
 #     return render(request, 'salesmanager/item_create_form.html', form)
 #
-
-
-
-
-def dashboard(request):
-    """Just render the dashboard page"""
-    return render(request, 'salesmanager/base.html', {})

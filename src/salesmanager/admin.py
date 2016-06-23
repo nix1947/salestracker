@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Address, Item, Category, Company, ContactPerson
+from .models import Address, Item, Category, Company, ContactPerson, Clearance
 
 
 @admin.register
@@ -12,3 +12,4 @@ admin.site.register(Company)
 admin.site.register(ContactPerson)
 admin.site.register(Address)
 admin.site.register(Category)
+admin.site.register(Clearance)

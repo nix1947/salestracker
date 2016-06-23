@@ -1,2 +1,76 @@
-{% load staticfiles %}
 {% extends 'salesmanager/base.html' %}
+{% load staticfiles %}
+{% load myfilters %}
+
+{% block content %}
+<div class="row">
+    {% if overall_cost|gt:-1 %}
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+          <div class="inner">
+            <h4> Rs: {{overall_cost}}</h4>
+
+            <p>Overall Budget</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <small class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></small>
+        </div>
+      </div>
+    {% endif %}
+      <!-- ./col -->
+      {% if overall_sales|gt:-1 %}
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+          <div class="inner">
+            <h4>Rs: {{overall_sales}}</h4>
+            <p>Overall Sales</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <small class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></small>
+        </div>
+      </div>
+    {% endif %}
+      <!-- ./col -->
+
+    {% if overall_benefit|gt:-1 %}
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+          <div class="inner">
+            <h4>Rs: {{overall_benefit}}</h4>
+
+            <p>Overall Benefit</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <small class="small-box-footer"><i class="fa fa-arrow-circle-right"></i></small>
+        </div>
+      </div>
+    {% endif %}
+      <!-- ./col -->
+    {% if overall_benefit_in_perctange|gt:-1 %}
+      <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+          <div class="inner">
+            <h4>{{overall_benefit_in_perctange}}<sup style="font-size: 20px">%</sup></h4>
+
+            <p>Benefit Perctange</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <small  class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></small>
+        </div>
+      </div>
+      <!-- ./col -->
+    {% endif %}
+    </div>
+{% endblock content %}
